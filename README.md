@@ -8,7 +8,7 @@ setup-and-play executable. No files to copy, no folders to find.
 > BattlEye and disables itself. There is no setting to change this, and none
 > will be added. Do not attempt to use it online.
 
-**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.9.1
+**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.9.2
 
 ---
 
@@ -22,7 +22,7 @@ the game simply starts without VR. The launcher checks your build on the first
 screen and tells you plainly:
 
 ```
-GTAVR 0.9.1 | requires GTA V Legacy build 1.0.3889.0
+GTAVR 0.9.2 | requires GTA V Legacy build 1.0.3889.0
 | ScriptHookV v3889.0 / 1158.13 | your build: 1.0.3889.0  MATCH
 ```
 
@@ -90,14 +90,11 @@ tells you which is the bottleneck.
 
 ## Known issues
 
-Honest list for 0.9.1:
+Honest list for 0.9.2:
 
-- **No aim reticle.** The mod drives a scripted camera, and GTA suppresses its
-  own reticle while one is active. Not yet replaced.
 - **Smooth has spatial artifacts.** Only one viewpoint is really rendered, so
-  edges of near objects (your own character, the car interior) can smear or
-  ghost in the right eye, and transparents such as windscreens and rain sit at
-  the wrong depth.
+  edges of near objects can soften in the right eye, and transparents such as
+  windscreens and rain sit at the wrong depth.
 - **AER doubles near objects at speed.** Structural: at 45 fps the eyes are one
   game frame apart, which at 120 km/h is ~73 cm of camera travel. More frames
   is the only cure.
