@@ -30,13 +30,35 @@ Full log (public): <https://github.com/DeployAbi/GTAVR/actions/runs/33886946940>
 
 `sha256sum -c SHA256SUMS.txt` on the runner: `GTAVR-Setup-and-Play.exe: OK`
 
-## VirusTotal
+## VirusTotal (75 engines)
 
-Not run automatically for this release (no API key configured in the
-repository yet). Upload the file at <https://www.virustotal.com/> yourself and
-compare the SHA-256 shown there with the one above; expect the usual
-"HackTool"/"Injector" heuristics from engines that flag every game mod loader
-(see [SECURITY.md](../../SECURITY.md)).
+Report: <https://www.virustotal.com/gui/file/8e911581f18e5d85ab7111e35081d8a7d4edac225d60fbdd3b2ff5f948473194>
+(GitHub run with the VirusTotal upload: <https://github.com/DeployAbi/GTAVR/actions/runs/33888062420>)
+
+| | |
+|---|---|
+| Undetected | **62** - including Kaspersky, ESET, Bitdefender, Avast, AVG, Avira, Sophos, Trend Micro, F-Secure, G Data, Emsisoft, Malwarebytes, CrowdStrike, SentinelOne, Cylance, Deep Instinct, Palo Alto, Fortinet, Dr.Web, Trellix ENS |
+| Flagged | **9** - APEX (Malicious), Bkav (W32.Malware.178ECB18), Elastic (malicious, high confidence), Google (Detected), Ikarus (Trojan.Win64.Krypt), McAfee cloud (ti!8E911581F18E), Microsoft (Trojan:Win32/Wacatac.B!ml), Symantec (ML.Attribute.HighConfidence), Trapmine (suspicious.low.ml.score) |
+| Not applicable | 4 mobile engines |
+
+What the nine have in common: every label is a machine-learning or
+hash-keyed heuristic (`!ml`, `ML.Attribute`, `low.ml.score`, `ti!<hash>`,
+the generic `Krypt`/`W32.Malware.<id>` buckets). None names a malware family,
+and the signature-based engines - including Trellix's own signature engine
+next to McAfee's cloud ML - pass it. Microsoft Defender on the GitHub runner
+(no cloud lookup) also passes it; `Wacatac.B!ml` is Microsoft's cloud model,
+the best-known generic verdict on unsigned self-contained installers.
+
+Why the models score it: the launcher is an unsigned .NET executable that
+carries ~4 MB of embedded binaries, requests administrator rights, writes
+DLLs into another program's folder and, until 0.9.7, had **no version
+resource at all** (file version 0.0.0.0, no publisher, no description).
+0.9.8 stamps a proper identity; a code-signing certificate is what removes
+the rest.
+
+If you want a second opinion without trusting this page: upload the file at
+virustotal.com yourself and compare the SHA-256 shown there with the one at
+the top.
 
 ## Build attestation
 

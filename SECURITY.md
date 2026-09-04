@@ -69,6 +69,12 @@ several classic points at once:
 None of that makes it safe; it explains the verdict. The section below is
 what makes it checkable.
 
+For the record, 0.9.7 on VirusTotal: 62 engines clean (Kaspersky, ESET,
+Bitdefender, Avast, Sophos, CrowdStrike, SentinelOne, Trend Micro,
+Malwarebytes and the rest), 9 flagged, all nine with machine-learning or
+hash-keyed generic labels and no malware family name. Every release's
+numbers are in [scans/](scans/).
+
 ## How to check for yourself
 
 **1. Checksum.** Compare the file you downloaded with `SHA256SUMS.txt` in this
