@@ -126,6 +126,8 @@ faith:
   [`security-scan`](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml)
   workflow (Microsoft Defender with fresh signatures, ClamAV, checksum, and
   VirusTotal when configured). The logs are public.
+- The verdicts, engine and signature versions and the build attestation for
+  each release are kept permanently under [scans/](scans/).
 - [SECURITY.md](SECURITY.md) lists everything the program touches, the two
   hosts it ever connects to, and how to verify it with your own tools.
 - Verify what you downloaded:
