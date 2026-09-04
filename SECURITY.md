@@ -109,6 +109,16 @@ yet. Signing would remove the SmartScreen warning; it would not change what
 the program does. If it happens, the release notes will say so and the
 `Authenticode status` step in the scan workflow will show `Valid`.
 
+Measured on 2026-09-04, for anyone wondering how much the metadata matters:
+the 0.9.7 launcher carried no version resource at all. Rebuilding the
+identical mod with a full identity (publisher, product, description,
+version) moved VirusTotal from 9 to 8 flagged engines - Bkav and Ikarus
+dropped off, Elastic went from high to moderate confidence, one generic
+`susgen` entry appeared. The remaining eight are machine-learning models
+that weight the missing signature above everything else, which is why the
+next step is a certificate, not more metadata. Every release from the next
+one on carries the identity.
+
 ## Reporting
 
 If you believe a release is compromised or you found a vulnerability, open a
