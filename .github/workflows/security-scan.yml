@@ -1,0 +1,90 @@
+name: security-scan
+
+# Every published exe is scanned in public, on GitHub's own runners, by
+# engines nobody here controls: Microsoft Defender with freshly updated
+# signatures, ClamAV, and (when the repository owner has stored a VirusTotal
+# API key) VirusTotal's 70+ engines. The checksum job proves the file in the
+# repository is the file the release notes name. Anyone can open the run log.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "GTAVR-Setup-and-Play.exe"
+      - "SHA256SUMS.txt"
+      - ".github/workflows/security-scan.yml"
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # the VirusTotal step appends the analysis link to the release notes
+
+jobs:
+  checksum:
+    name: SHA-256 matches SHA256SUMS.txt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify
+        run: |
+          sha256sum GTAVR-Setup-and-Play.exe
+          sha256sum -c SHA256SUMS.txt
+
+  windows-defender:
+    name: Microsoft Defender (latest signatures)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update signatures and scan
+        shell: pwsh
+        run: |
+          $mp = Get-ChildItem "$env:ProgramData\Microsoft\Windows Defender\Platform\*\MpCmdRun.exe" -ErrorAction SilentlyContinue |
+                Sort-Object LastWriteTime | Select-Object -Last 1
+          if (-not $mp) { $mp = Get-Item "$env:ProgramFiles\Windows Defender\MpCmdRun.exe" }
+          Write-Host "Engine: $($mp.FullName)"
+          & $mp.FullName -SignatureUpdate
+          Write-Host "Signature update exit code: $LASTEXITCODE (non-zero only means the update could not run; the scan below still uses the runner's signatures)"
+          & $mp.FullName -Scan -ScanType 3 -File "$PWD\GTAVR-Setup-and-Play.exe" -DisableRemediation
+          $scan = $LASTEXITCODE
+          Write-Host "Scan exit code: $scan (0 = no threat, 2 = threat found)"
+          Get-MpComputerStatus | Select-Object AntivirusSignatureVersion, AntivirusSignatureLastUpdated, AMEngineVersion | Format-List
+          if ($scan -ne 0) { throw "Microsoft Defender reported exit code $scan" }
+      - name: Authenticode status (informational - the file is not code-signed)
+        shell: pwsh
+        run: (Get-AuthenticodeSignature .\GTAVR-Setup-and-Play.exe).Status
+
+  clamav:
+    name: ClamAV
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install, refresh signatures, scan
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq clamav
+          sudo systemctl stop clamav-freshclam 2>/dev/null || true
+          sudo freshclam --quiet || echo "freshclam could not refresh; scanning with the packaged signatures"
+          clamscan --version
+          clamscan --infected GTAVR-Setup-and-Play.exe
+
+  virustotal:
+    name: VirusTotal (multi-engine)
+    runs-on: ubuntu-latest
+    needs: [checksum]
+    env:
+      VT_API_KEY: ${{ secrets.VT_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload to VirusTotal and link the analysis
+        if: env.VT_API_KEY != ''
+        uses: crazy-max/ghaction-virustotal@v4
+        with:
+          vt_api_key: ${{ secrets.VT_API_KEY }}
+          files: GTAVR-Setup-and-Play.exe
+          update_release_body: ${{ github.event_name == 'release' }}
+      - name: Not configured
+        if: env.VT_API_KEY == ''
+        run: |
+          echo "No VT_API_KEY repository secret: the VirusTotal upload is skipped."
+          echo "Anyone can upload GTAVR-Setup-and-Play.exe at https://www.virustotal.com/ and compare the SHA-256 with SHA256SUMS.txt."

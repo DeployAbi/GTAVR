@@ -10,6 +10,8 @@ setup-and-play executable. No files to copy, no folders to find.
 
 **Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.9.7
 
+[![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) every release is scanned in public by Microsoft Defender, ClamAV and VirusTotal on GitHub's runners - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
+
 ---
 
 ## Before you start — the one hard requirement
@@ -106,21 +108,35 @@ Honest list for 0.9.7:
 - **Oversized game window limits the mouse.** If Game resolution makes the
   window taller than your monitor, Windows will not let the cursor reach the
   off-screen part. A gamepad avoids it.
-- **Unsigned.** Windows SmartScreen will warn. See below.
+- **Unsigned.** Windows SmartScreen will warn, and some antivirus engines flag
+  injectors on principle. See *Antivirus warnings and SmartScreen* below.
 
 Headset-specific behaviour beyond the author's own hardware is **unverified**.
 
-## SmartScreen
+## Antivirus warnings and SmartScreen
 
 The executable is not code-signed and requests administrator rights, so Windows
-will show a warning. If that is not acceptable to you, do not run it. You can
-verify what you downloaded:
+will show a warning. Some antivirus engines flag it as a "HackTool" or
+"Injector": it drops DLLs into the game folder and hooks Direct3D inside
+`GTA5.exe`, which is exactly what a VR mod has to do and exactly what those
+heuristics look for. It is not a trojan, and you do not have to take that on
+faith:
+
+- Every release is scanned on GitHub's own runners by the
+  [`security-scan`](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml)
+  workflow (Microsoft Defender with fresh signatures, ClamAV, checksum, and
+  VirusTotal when configured). The logs are public.
+- [SECURITY.md](SECURITY.md) lists everything the program touches, the two
+  hosts it ever connects to, and how to verify it with your own tools.
+- Verify what you downloaded:
 
 ```powershell
 Get-FileHash .\GTAVR-Setup-and-Play.exe -Algorithm SHA256
 ```
 
-Expected: see [`SHA256SUMS.txt`](SHA256SUMS.txt).
+Expected: see [`SHA256SUMS.txt`](SHA256SUMS.txt) and the release notes.
+
+If that is not acceptable to you, do not run it.
 
 ## Uninstall
 
