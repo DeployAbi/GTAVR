@@ -50,7 +50,16 @@ Other wheel bases, pedal hubs and headsets remain UNVERIFIED.
 
 ## Antivirus results
 
-GitHub runs checksum verification, Microsoft Defender and ClamAV when this
-EXE is published. VirusTotal upload depends on a configured repository API key.
-No result is claimed until the run for this exact EXE completes; see the
-[public workflow](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml).
+The [release scan](https://github.com/DeployAbi/GTAVR/actions/runs/35656909135)
+completed successfully for release commit
+`80f6f188583de65132335169d7cd5e49b341e081` and the EXE hash above:
+
+- SHA256 checksum matched.
+- Microsoft Defender returned scan exit code 0, with signature 1.459.324.0.
+- ClamAV scanned the EXE and reported 0 infected files.
+- VirusTotal upload completed; its
+  [analysis report](https://www.virustotal.com/gui/file-analysis/MTRkZDZlMDcxMWI3OTQzMDVmZjhjYjkyM2Q1N2IxYjU6MTc5MDAyNTgzOA==/detection)
+  is linked from the release notes. Upload success alone is not a claim that
+  every VirusTotal engine returned a clean verdict.
+
+The EXE is not Authenticode signed. These results apply to this exact artifact.
