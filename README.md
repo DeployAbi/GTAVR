@@ -8,11 +8,17 @@ setup-and-play executable. No files to copy, no folders to find.
 > BattlEye and disables itself. There is no setting to change this, and none
 > will be added. Do not attempt to use it online.
 
-**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.8
+**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.9
 
 [![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) every release is scanned in public by Microsoft Defender, ClamAV and VirusTotal on GitHub's runners - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
 
 ## Changelog (TL;DR)
+
+**0.11.9** (2026-09-21)
+
+- **Bindings capture the control you press**: click an action, release everything, press the trigger, grip or button you want. No more dropdown.
+- **Click or "more or less" per binding**: a trigger or grip can be a click, or pass how far you pull it.
+- **Driving set** behind **Use steering wheel / pedals to drive cars** (exe bindings dialog or in-game Controls): steer left, steer right, accelerate, brake, handbrake, each capturable and click-or-analog. Defaults: grips steer, triggers are the pedals, A is the handbrake.
 
 **0.11.8** (2026-09-21)
 
@@ -41,7 +47,7 @@ the game simply starts without VR. The launcher checks your build on the first
 screen and tells you plainly:
 
 ```
-GTAVR 0.11.8 | requires GTA V Legacy build 1.0.3889.0
+GTAVR 0.11.9 | requires GTA V Legacy build 1.0.3889.0
 | ScriptHookV v3889.0 / 1158.13 | your build: 1.0.3889.0  MATCH
 ```
 
@@ -109,7 +115,7 @@ tells you which is the bottleneck.
 
 ## Known issues
 
-Honest list for 0.11.8:
+Honest list for 0.11.9:
 
 - **Smooth has spatial artifacts.** Only one viewpoint is really rendered, so
   edges of near objects can soften in the right eye, and transparents such as
