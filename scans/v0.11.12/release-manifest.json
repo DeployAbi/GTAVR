@@ -1,0 +1,19 @@
+﻿{
+    "package":  "GTAVR",
+    "version":  "0.11.12",
+    "target":  "GTA V Legacy Story Mode",
+    "integrated_companion_required":  false,
+    "product_scope":  "legacy-only",
+    "launcher":  "GTAVR-Legacy.exe",
+    "architecture":  "win-x64",
+    "commit":  "29a45d288626268f3f678336e1915995a0b3bfde",
+    "dirty_worktree":  true,
+    "signed":  false,
+    "game_assets_included":  false,
+    "scripthook_included":  false,
+    "scripthook_downloaded_at_install":  true,
+    "scripthook_version":  "v3889.0 / 1158.13",
+    "scripthook_publisher":  "https://www.dev-c.com/gtav/scripthookv/",
+    "scripthook_archive_sha256":  "B64C97C3353906F14621E7E9511E4AEC2A7D436ECC21ED124D3816585E2E6188",
+    "generated_utc":  "2026-09-21T21:19:56.1509466Z"
+}
