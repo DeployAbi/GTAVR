@@ -8,9 +8,26 @@ setup-and-play executable. No files to copy, no folders to find.
 > BattlEye and disables itself. There is no setting to change this, and none
 > will be added. Do not attempt to use it online.
 
-**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.9.7
+**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.8
 
 [![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) every release is scanned in public by Microsoft Defender, ClamAV and VirusTotal on GitHub's runners - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
+
+## Changelog (TL;DR)
+
+**0.11.8** (2026-09-21)
+
+- **HUD is back**: every HUD element the game draws is captured into the lens HUD, whatever shader draws it.
+- **Motion controllers work**: each hand arms on its own; an idle or held second controller no longer blocks the first.
+- **No 2 fps freeze when Depth stereo engages**: the camera lease survives a stall, and the Smooth shaders and warp mesh are prepared before the first frame.
+- **Frame rate is game pixels**: the mod costs about 1 ms per frame; the game's own GPU time is about 0.75 ms per megapixel. The installer sets a 3600x3600 source (about 90 Hz on an RTX 5090); raise it in the launcher if your rate holds.
+- **Smooth turning by default**, **the character follows your head** beyond 60 degrees on foot, **analog pedals** in vehicles, **Press to bind** in the Bindings tab, **motion blur off**.
+
+<details><summary>0.9.7 (2026-09-04)</summary>
+
+- Smoother while driving (the frame marker no longer waits for the GPU); aiming follows the head; HUD capture no longer depends on a shader list; new Smooth right-eye synthesis; Smooth depth scale measured; black landing page and minimap fill fixed; settings survive the overlay.
+
+</details>
+
 
 ---
 
@@ -24,7 +41,7 @@ the game simply starts without VR. The launcher checks your build on the first
 screen and tells you plainly:
 
 ```
-GTAVR 0.9.7 | requires GTA V Legacy build 1.0.3889.0
+GTAVR 0.11.8 | requires GTA V Legacy build 1.0.3889.0
 | ScriptHookV v3889.0 / 1158.13 | your build: 1.0.3889.0  MATCH
 ```
 
@@ -92,7 +109,7 @@ tells you which is the bottleneck.
 
 ## Known issues
 
-Honest list for 0.9.7:
+Honest list for 0.11.8:
 
 - **Smooth has spatial artifacts.** Only one viewpoint is really rendered, so
   edges of near objects can soften in the right eye, and transparents such as
@@ -100,11 +117,12 @@ Honest list for 0.9.7:
 - **AER doubles near objects at speed.** Structural: the eyes are one game
   frame apart, which at 120 km/h and 90 fps is ~37 cm of camera travel. More
   frames is the only cure; Smooth avoids it by construction.
-- **Very high Game resolution can drop below the headset's refresh rate in
-  the city**, which reads as judder or flicker while driving. The log's
-  per-second `[gpu]` line splits the frame between the game's own render
-  and the mod; if the game's share is above the frame budget, lower Game
-  resolution one step.
+- **Frame rate is set by Game resolution.** The mod costs about 1 ms per
+  frame; the game's own GPU time is about 0.75 ms per megapixel on an RTX
+  5090 (36 megapixels at 6016x6016 is 25 ms, i.e. 40 fps). The log's
+  per-second `[gpu]` line splits the frame between the game's render, the
+  mod, and the CPU time in the Present hook; if the game's share is above
+  the frame budget, lower Game resolution.
 - **Oversized game window limits the mouse.** If Game resolution makes the
   window taller than your monitor, Windows will not let the cursor reach the
   off-screen part. A gamepad avoids it.
