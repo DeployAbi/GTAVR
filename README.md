@@ -8,22 +8,11 @@ setup-and-play executable. No files to copy, no folders to find.
 > BattlEye and disables itself. There is no setting to change this, and none
 > will be added. Do not attempt to use it online.
 
-**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.12
+**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.10
 
-[![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) public release scans use Microsoft Defender and ClamAV; VirusTotal runs when its repository API key is configured. See [release verification](scans/v0.11.12/README.md) for this EXE's results and [SECURITY.md](SECURITY.md) for its behavior.
+[![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) every release is scanned in public by Microsoft Defender, ClamAV and VirusTotal on GitHub's runners - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
 
 ## Changelog (TL;DR)
-
-**0.11.12** (2026-09-21)
-
-- **Separate wheel and pedal devices:** DirectInput reads additional axes and buttons, including the inspected Simucube base, GSI wheel and SC-Link pedal hub. Bind the throttle and brake independently in the EXE.
-- **Comfortable steering range:** capture center, your chosen left limit and right limit, then adjust the steering response curve. Those limits become full in-game steering.
-- **Wheel centering and overlay adjustment:** supported Simucube 2 bases use calibrated constant-force centering, replacing the native Spring effect that produced no felt resistance on the inspected rig. Enable it and adjust 1-5% strength from the EXE or the overlay's Controls/Bindings tabs. It is off by default and starts at 2% when enabled. Physical force response on this revision remains UNVERIFIED; road/tire effects and ActivePedal motor output are not included.
-- **Wheel radio buttons:** bind Previous radio station and Next radio station in the EXE. They work in a vehicle with Driving enabled, once per press; release between station changes. Existing steering and pedal calibration is retained.
-- **Menu and gameplay rendering:** resizing preserves GTA's cached rendering state, and sparse menu draws are presented. Startup resolution keeps the established timing; the gameplay-delayed resize from the withdrawn local wheel test is removed.
-- **Installer recovery:** identifies programs holding the mod's files, including a leftover PlayGTAV launcher, and offers to close them before an update.
-
-See the [full changelog](CHANGELOG.md) and [wheel/pedal setup](WHEEL-PEDALS.md).
 
 **0.11.10** (2026-09-21)
 
@@ -64,7 +53,7 @@ the game simply starts without VR. The launcher checks your build on the first
 screen and tells you plainly:
 
 ```
-GTAVR 0.11.12 | requires GTA V Legacy build 1.0.3889.0
+GTAVR 0.11.10 | requires GTA V Legacy build 1.0.3889.0
 | ScriptHookV v3889.0 / 1158.13 | your build: 1.0.3889.0  MATCH
 ```
 
@@ -132,7 +121,7 @@ tells you which is the bottleneck.
 
 ## Known issues
 
-Honest list for 0.11.12:
+Honest list for 0.11.10:
 
 - **Smooth has spatial artifacts.** Only one viewpoint is really rendered, so
   edges of near objects can soften in the right eye, and transparents such as

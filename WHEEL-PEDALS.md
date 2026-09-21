@@ -1,5 +1,9 @@
 # Wheel and pedals: DirectInput controls
 
+**This 0.11.12 build is withdrawn after a reported launch error 17. Do not
+install it. Use [0.11.10](https://github.com/DeployAbi/GTAVR/releases/tag/v0.11.10).
+The feature instructions below are retained for the withdrawn build only.**
+
 GTAVR 0.11.12 reads separate steering bases, USB wheels and pedal hubs
 through Windows DirectInput. It includes the eight axes and extra buttons
 that the older Windows joystick interface can miss. It adds comfortable

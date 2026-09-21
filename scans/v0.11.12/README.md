@@ -1,5 +1,9 @@
 # GTAVR 0.11.12 verification
 
+**WITHDRAWN:** the user reported game launch error 17. The release is no longer
+public and the main EXE is restored to 0.11.10. These automated results are
+historical evidence, not confirmation of successful game startup.
+
 `GTAVR-Setup-and-Play.exe` SHA256:
 
 `24563E12D9F7D369E99C171F138601F42D19E04C9068B575030AC2F0CDAA64E7`

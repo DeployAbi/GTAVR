@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.11.12 - 2026-09-21
+## 0.11.12 - WITHDRAWN - 2026-09-21
+
+Withdrawn after a launch failure reported as error 17. Do not install this
+version. The public EXE and latest release have been restored to
+[0.11.10](https://github.com/DeployAbi/GTAVR/releases/tag/v0.11.10).
+The cause is under investigation; passing unit tests and scans did not
+establish successful game startup on the final core/bridge pair.
 
 ### Wheel and pedals
 
