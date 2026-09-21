@@ -8,11 +8,17 @@ setup-and-play executable. No files to copy, no folders to find.
 > BattlEye and disables itself. There is no setting to change this, and none
 > will be added. Do not attempt to use it online.
 
-**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.9
+**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.10
 
 [![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) every release is scanned in public by Microsoft Defender, ClamAV and VirusTotal on GitHub's runners - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
 
 ## Changelog (TL;DR)
+
+**0.11.10** (2026-09-21)
+
+- **Bind your gamepad, steering wheel or pedals from the exe**: every row of the Bindings dialog has **Click to bind**; click it, then press or move the control (button, trigger, stick, wheel axis, pedal, hat) and it is bound. Works in every input mode, including Gamepad. A wheel axis keeps its resting position and direction, so steer left / steer right are two turns of the same wheel.
+- **The car no longer flickers between two positions** in AER / geometric: the camera now rides the vehicle instead of being placed by coordinates each script tick.
+- **Uninstall says what it could not remove** (file, reason, the program holding it) and keeps its marker so a retry finishes; the launcher's log is saved to `%LOCALAPPDATA%\GTAVR\launcher.log`.
 
 **0.11.9** (2026-09-21)
 
@@ -47,7 +53,7 @@ the game simply starts without VR. The launcher checks your build on the first
 screen and tells you plainly:
 
 ```
-GTAVR 0.11.9 | requires GTA V Legacy build 1.0.3889.0
+GTAVR 0.11.10 | requires GTA V Legacy build 1.0.3889.0
 | ScriptHookV v3889.0 / 1158.13 | your build: 1.0.3889.0  MATCH
 ```
 
@@ -115,7 +121,7 @@ tells you which is the bottleneck.
 
 ## Known issues
 
-Honest list for 0.11.9:
+Honest list for 0.11.10:
 
 - **Smooth has spatial artifacts.** Only one viewpoint is really rendered, so
   edges of near objects can soften in the right eye, and transparents such as
