@@ -12,6 +12,17 @@ setup-and-play executable. No files to copy, no folders to find.
 
 [![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) published releases trigger Microsoft Defender and ClamAV checks on GitHub runners, plus VirusTotal when configured; inspect each run for its result - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
 
+**Scan status (2026-09-22):** local and GitHub Microsoft Defender scans
+reported no threats; ClamAV reported zero infected files. The
+[VirusTotal report](https://www.virustotal.com/gui/file/6c13f5b99024dde2fca448bec3d9723c4784a11b7a4b48f57bc7a493222b0295)
+for the same EXE reports **9 detections, 62 undetected and 4 unsupported**,
+including a Microsoft `Trojan:Win32/Wacatac.C!ml` verdict. These mixed results
+are not established false positives. See the
+[recorded results](scans/0.11.19-ffb-test.json) and
+[completed CI run](https://github.com/DeployAbi/GTAVR/actions/runs/35774673517).
+A successful CI run means the scans/report lookup completed, not that every
+VirusTotal engine returned no detection.
+
 ## Changelog (TL;DR)
 
 **0.11.19-ffb-test** (2026-09-22, prerelease)
@@ -28,7 +39,7 @@ setup-and-play executable. No files to copy, no folders to find.
 - **Close GTA and Install / Update Everything, then Verify.** Real hardware
   acceptance of this exact candidate remains UNVERIFIED.
 
-[Full changelog](CHANGELOG.md) ? [Release and ZIP](https://github.com/DeployAbi/GTAVR/releases/tag/v0.11.19-ffb-test) ? [Wheel and pedal setup](WHEEL-PEDALS.md)
+[Full changelog](CHANGELOG.md) ? [Release](https://github.com/DeployAbi/GTAVR/releases/tag/v0.11.19-ffb-test) ? [Wheel and pedal setup](WHEEL-PEDALS.md)
 
 **0.11.10** (2026-09-21)
 

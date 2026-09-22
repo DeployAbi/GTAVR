@@ -7,6 +7,17 @@ anyone's word for it.
 
 ## 0.11.19 setup-checker change
 
+**Scan status (2026-09-22):** local and GitHub Microsoft Defender scans
+reported no threats; ClamAV reported zero infected files. The
+[VirusTotal report](https://www.virustotal.com/gui/file/6c13f5b99024dde2fca448bec3d9723c4784a11b7a4b48f57bc7a493222b0295)
+for the same EXE reports **9 detections, 62 undetected and 4 unsupported**,
+including a Microsoft `Trojan:Win32/Wacatac.C!ml` verdict. These mixed results
+are not established false positives. See the
+[recorded results](scans/0.11.19-ffb-test.json) and
+[completed CI run](https://github.com/DeployAbi/GTAVR/actions/runs/35774673517).
+A successful CI run means the scans/report lookup completed, not that every
+VirusTotal engine returned no detection.
+
 On 2026-09-22 Microsoft Defender quarantined an older installed `GTAVOVR.exe`
 helper as `Trojan:Win32/Wacatac.C!ml`. This is a recorded detection, not a
 proven false positive. The GUI needed only its setup checks, but that older

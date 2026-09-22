@@ -2,6 +2,19 @@
 
 ## 0.11.19-ffb-test - 2026-09-22 (prerelease)
 
+Only `GTAVR-Setup-and-Play.exe` is attached to this release.
+
+**Scan status (2026-09-22):** local and GitHub Microsoft Defender scans
+reported no threats; ClamAV reported zero infected files. The
+[VirusTotal report](https://www.virustotal.com/gui/file/6c13f5b99024dde2fca448bec3d9723c4784a11b7a4b48f57bc7a493222b0295)
+for the same EXE reports **9 detections, 62 undetected and 4 unsupported**,
+including a Microsoft `Trojan:Win32/Wacatac.C!ml` verdict. These mixed results
+are not established false positives. See the
+[recorded results](scans/0.11.19-ffb-test.json) and
+[completed CI run](https://github.com/DeployAbi/GTAVR/actions/runs/35774673517).
+A successful CI run means the scans/report lookup completed, not that every
+VirusTotal engine returned no detection.
+
 ### Wheel and pedal input
 
 - Fix controls that capture correctly in the EXE but do nothing in the car.
@@ -17,8 +30,8 @@
   engagement ramp and an always-on runaway watchdog are included. Start low;
   the configurable maximum is 100% of DirectInput nominal, subject to the
   base's own gain. ActivePedal motor effects and a gearbox are not included.
-- Include the launcher force test and the ZIP's `wheelprobe --axes` diagnostic
-  for pedal travel. Physical force feel and other hardware remain UNVERIFIED.
+- Include the launcher force test and full-travel pedal calibration.
+  Physical force feel and other hardware remain UNVERIFIED.
 
 ### Startup and rendering
 

@@ -27,5 +27,43 @@
       "Result": "No threats detected",
       "Artifact": "Extracted ZIP package"
     }
-  ]
+  ],
+  "public_ci": {
+    "run": "https://github.com/DeployAbi/GTAVR/actions/runs/35774673517",
+    "conclusion": "success",
+    "exe_sha256": "6c13f5b99024dde2fca448bec3d9723c4784a11b7a4b48f57bc7a493222b0295",
+    "defender": "No threats detected",
+    "clamav": "0 infected files",
+    "virus_total": {
+      "detections": {
+        "APEX": "Malicious",
+        "Bkav": "W32.Malware.B0B194FF",
+        "ESET-NOD32": "Win64/GameHack_AGen.BQI potentially unsafe application",
+        "Elastic": "malicious (moderate confidence)",
+        "MaxSecure": "Trojan.Malware.300983.susgen",
+        "McAfeeD": "ti!6C13F5B99024",
+        "Microsoft": "Trojan:Win32/Wacatac.C!ml",
+        "Symantec": "ML.Attribute.HighConfidence",
+        "Trapmine": "suspicious.low.ml.score"
+      },
+      "last_analysis_date": 1790105424,
+      "sha256": "6c13f5b99024dde2fca448bec3d9723c4784a11b7a4b48f57bc7a493222b0295",
+      "statistics": {
+        "confirmed-timeout": 0,
+        "failure": 0,
+        "harmless": 0,
+        "malicious": 9,
+        "suspicious": 0,
+        "timeout": 0,
+        "type-unsupported": 4,
+        "undetected": 62
+      },
+      "url": "https://www.virustotal.com/gui/file/6c13f5b99024dde2fca448bec3d9723c4784a11b7a4b48f57bc7a493222b0295"
+    },
+    "interpretation": "Workflow success confirms the checks and report lookup completed; it does not mean VirusTotal returned a clean verdict. The 9 detections are not established false positives."
+  },
+  "release_assets": [
+    "GTAVR-Setup-and-Play.exe"
+  ],
+  "local_zip_note": "The ZIP was scanned locally; it is not an uploaded release asset."
 }

@@ -53,10 +53,9 @@ bindings dialog (it is offered automatically right after steering calibration,
 and needs both steering directions calibrated on one DirectInput base plus a
 1-100% strength set). The wheel turns left and right for a few seconds at the
 chosen strength, outside the game; the dialog reports whether the base's
-actuators were on and the effect played. If it does not move the wheel, the
-standalone `tools\wheelprobe\wheelprobe.exe` in the package runs the same
-sweep without the launcher, to tell a launcher problem apart from a
-driver/Tuner problem. Bench results are **UNVERIFIED** on hardware.
+actuators were on and the effect played. This public release distributes
+only the setup-and-play EXE, which includes that force-test dialog.
+Bench results are **UNVERIFIED** on hardware.
 
 If force pushes away from center, stop the test and use **Invert wheel force
 direction** before trying again at low strength. Engagement ramps over 300 ms.
@@ -94,8 +93,6 @@ resolution timing and preserves GTA's cached rendering state during resizing.
 It removes the gameplay-delayed resize from the withdrawn 0.11.12-wheel-test
 build, which caused a reported black gameplay image.
 Physical menu and gameplay acceptance is recorded separately from unit tests.
-
-For a read-only axis check, use the ZIP's `tools/wheelprobe/wheelprobe.exe --axes <device index>`; it displays raw/normalized axes without force output.
 
 If the brake cannot be captured, check that its brake output moves in
 Simucube Tuner. Being an active pedal does not require the game to control its
