@@ -77,8 +77,47 @@ jobs:
       VT_API_KEY: ${{ secrets.VT_API_KEY }}
     steps:
       - uses: actions/checkout@v4
-      - name: Upload to VirusTotal and link the analysis
+      - name: Reuse an existing VirusTotal report for this exact hash
+        id: existing-vt
         if: env.VT_API_KEY != ''
+        shell: python
+        run: |
+          import hashlib, json, os, urllib.error, urllib.request
+          from pathlib import Path
+          digest = hashlib.sha256(Path("GTAVR-Setup-and-Play.exe").read_bytes()).hexdigest()
+          request = urllib.request.Request(
+              "https://www.virustotal.com/api/v3/files/" + digest,
+              headers={"x-apikey": os.environ["VT_API_KEY"]})
+          try:
+              with urllib.request.urlopen(request, timeout=45) as response:
+                  report = json.load(response)
+          except urllib.error.HTTPError as error:
+              if error.code != 404:
+                  raise RuntimeError("VirusTotal report lookup returned HTTP " + str(error.code)) from None
+              report = None
+          exists = report is not None
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as output:
+              output.write("found=" + str(exists).lower() + "\n")
+          if exists:
+              data = report["data"]
+              if data["id"].lower() != digest:
+                  raise RuntimeError("VirusTotal report hash does not match the release binary")
+              attributes = data["attributes"]
+              result = {"sha256": digest, "url": "https://www.virustotal.com/gui/file/" + digest,
+                  "last_analysis_date": attributes.get("last_analysis_date"),
+                  "statistics": attributes.get("last_analysis_stats", {}),
+                  "detections": {name: item.get("result") for name, item in
+                      attributes.get("last_analysis_results", {}).items()
+                      if item.get("category") in ("malicious", "suspicious")}}
+              print("VT_REPORT_JSON=" + json.dumps(result, sort_keys=True))
+              print("Existing report retrieved; this step does not assert a clean multi-engine verdict.")
+              with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+                  summary.write("VirusTotal report for `" + digest + "`: " + result["url"] + "\n\n")
+                  summary.write("Engine statistics: `" + json.dumps(result["statistics"]) + "`. A successful lookup is not a clean verdict.\n")
+          else:
+              print("No report for this hash; upload is required.")
+      - name: Upload to VirusTotal and link the analysis
+        if: env.VT_API_KEY != '' && steps.existing-vt.outputs.found != 'true'
         uses: crazy-max/ghaction-virustotal@v4
         with:
           vt_api_key: ${{ secrets.VT_API_KEY }}
