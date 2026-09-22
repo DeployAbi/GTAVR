@@ -8,11 +8,27 @@ setup-and-play executable. No files to copy, no folders to find.
 > BattlEye and disables itself. There is no setting to change this, and none
 > will be added. Do not attempt to use it online.
 
-**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version 0.11.10
+**Download → [`GTAVR-Setup-and-Play.exe`](GTAVR-Setup-and-Play.exe)** · version **0.11.19-ffb-test (prerelease)**
 
-[![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) every release is scanned in public by Microsoft Defender, ClamAV and VirusTotal on GitHub's runners - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
+[![security scan](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml/badge.svg)](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml) published releases trigger Microsoft Defender and ClamAV checks on GitHub runners, plus VirusTotal when configured; inspect each run for its result - see [SECURITY.md](SECURITY.md) for what the exe does and how to verify it yourself.
 
 ## Changelog (TL;DR)
+
+**0.11.19-ffb-test** (2026-09-22, prerelease)
+
+- Fix wheel/pedal controls that bind in the EXE but are erased in-game when
+  VR hands are inactive. Gamepad mode keeps physical driving input.
+- Include separate DirectInput pedals, full-travel calibration, optional wheel
+  force with direction inversion/ramp/watchdog, and vehicle radio buttons.
+- Correct UTF-16 startup-log handling, menu/resize state and transient vehicle
+  camera ownership.
+- Ship a read-only setup checker; Verify no longer executes an older helper
+  after reporting a mismatched installation. Local Defender scans of the
+  finished EXE, ZIP and extracted package found no threats.
+- **Close GTA and Install / Update Everything, then Verify.** Real hardware
+  acceptance of this exact candidate remains UNVERIFIED.
+
+[Full changelog](CHANGELOG.md) ? [Release and ZIP](https://github.com/DeployAbi/GTAVR/releases/tag/v0.11.19-ffb-test) ? [Wheel and pedal setup](WHEEL-PEDALS.md)
 
 **0.11.10** (2026-09-21)
 
@@ -53,7 +69,7 @@ the game simply starts without VR. The launcher checks your build on the first
 screen and tells you plainly:
 
 ```
-GTAVR 0.11.10 | requires GTA V Legacy build 1.0.3889.0
+GTAVR 0.11.19-ffb-test | requires GTA V Legacy build 1.0.3889.0
 | ScriptHookV v3889.0 / 1158.13 | your build: 1.0.3889.0  MATCH
 ```
 
@@ -121,7 +137,7 @@ tells you which is the bottleneck.
 
 ## Known issues
 
-Honest list for 0.11.10:
+Current limits for 0.11.19-ffb-test:
 
 - **Smooth has spatial artifacts.** Only one viewpoint is really rendered, so
   edges of near objects can soften in the right eye, and transparents such as
@@ -129,12 +145,11 @@ Honest list for 0.11.10:
 - **AER doubles near objects at speed.** Structural: the eyes are one game
   frame apart, which at 120 km/h and 90 fps is ~37 cm of camera travel. More
   frames is the only cure; Smooth avoids it by construction.
-- **Frame rate is set by Game resolution.** The mod costs about 1 ms per
-  frame; the game's own GPU time is about 0.75 ms per megapixel on an RTX
-  5090 (36 megapixels at 6016x6016 is 25 ms, i.e. 40 fps). The log's
-  per-second `[gpu]` line splits the frame between the game's render, the
-  mod, and the CPU time in the Present hook; if the game's share is above
-  the frame budget, lower Game resolution.
+- **Frame rate depends on scene, graphics mods and source resolution.**
+  Increasing headset textures alone cannot recover detail missing from a
+  small game source. Inspect frame-time percentiles and actual source
+  dimensions; the per-second `[gpu]` estimates are diagnostic, not a
+  guarantee for a GPU model or another graphics stack.
 - **Oversized game window limits the mouse.** If Game resolution makes the
   window taller than your monitor, Windows will not let the cursor reach the
   off-screen part. A gamepad avoids it.
@@ -145,17 +160,23 @@ Headset-specific behaviour beyond the author's own hardware is **unverified**.
 
 ## Antivirus warnings and SmartScreen
 
-The executable is not code-signed and requests administrator rights, so Windows
-will show a warning. Some antivirus engines flag it as a "HackTool" or
-"Injector": it drops DLLs into the game folder and hooks Direct3D inside
-`GTA5.exe`, which is exactly what a VR mod has to do and exactly what those
-heuristics look for. It is not a trojan, and you do not have to take that on
-faith:
+The executable is not code-signed. SmartScreen reputation warnings and
+antivirus detections are different checks. An older installed `GTAVOVR.exe`
+helper was quarantined by Microsoft Defender as `Trojan:Win32/Wacatac.C!ml`;
+that result is not established to be a false positive.
 
-- Every release is scanned on GitHub's own runners by the
+0.11.19 packages a dedicated read-only checker with manual injection, process
+launch, staging and settings-write code excluded. Local Defender scans found
+no threats in the exact published EXE, ZIP and extracted package; the dated
+[receipt](scans/0.11.19-ffb-test.json) records hashes, engine and signatures.
+A scan result is specific to the tested file and signatures. No antivirus
+exclusion or quarantine restoration is required by this release.
+
+- Publishing triggers checks on GitHub runners through the
   [`security-scan`](https://github.com/DeployAbi/GTAVR/actions/workflows/security-scan.yml)
-  workflow (Microsoft Defender with fresh signatures, ClamAV, checksum, and
-  VirusTotal when configured). The logs are public.
+  workflow (Microsoft Defender, ClamAV, checksum, and VirusTotal when
+  configured). Check the public run result; a queued or failed run is not a
+  clean scan.
 - The verdicts, engine and signature versions and the build attestation for
   each release are kept permanently under [scans/](scans/).
 - [SECURITY.md](SECURITY.md) lists everything the program touches, the two

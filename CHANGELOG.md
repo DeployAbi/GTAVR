@@ -1,5 +1,66 @@
 # Changelog
 
+## 0.11.19-ffb-test - 2026-09-22 (prerelease)
+
+### Wheel and pedal input
+
+- Fix controls that capture correctly in the EXE but do nothing in the car.
+  An optional VR body update could erase accepted wheel/pedal input when VR
+  hands were inactive, including Gamepad mode. Physical steering, throttle
+  and brake now remain active independently of VR hand tracking.
+- Read separate DirectInput steering bases and pedal hubs, including axes
+  unavailable through the older joystick interface. Calibrate steering
+  center/limits and each pedal's rest/full-press travel, including inverted
+  axes. Existing calibrated bindings are preserved.
+- Include vehicle-only radio bindings and optional Simucube 2 centering and
+  telemetry-based road/engine force. Force-direction inversion, a 300 ms
+  engagement ramp and an always-on runaway watchdog are included. Start low;
+  the configurable maximum is 100% of DirectInput nominal, subject to the
+  base's own gain. ActivePedal motor effects and a gearbox are not included.
+- Include the launcher force test and the ZIP's `wheelprobe --axes` diagnostic
+  for pedal travel. Physical force feel and other hardware remain UNVERIFIED.
+
+### Startup and rendering
+
+- Decode UTF-16 Social Club logs so the startup observer can recognize the
+  current session's UI readiness. Online/BattlEye protection remains unchanged.
+- Preserve cached game rendering state during source-image resize and accept
+  sparse menu frames. Retain the vehicle-attached VR camera.
+- Hold VR camera ownership through brief transient vehicle/startup blockers;
+  protection, pause, cutscene and foreign-camera blockers still release it
+  immediately. Add AER cadence and device-input diagnostics.
+
+### Installer and verification
+
+- Replace the distributed developer injector with a dedicated read-only
+  setup checker. Manual process injection, process launch, file staging and
+  settings writes are excluded from that binary. Normal Story Mode loading
+  continues through the proxy loader.
+- Stop Verify/Check Setup from executing an old helper after installed
+  payload hashes fail verification. Use Install / Update Everything first.
+- This follows a Defender quarantine of the older `GTAVOVR.exe` helper as
+  `Trojan:Win32/Wacatac.C!ml`. That older detection is not established to be a
+  false positive. No quarantined file was restored or antivirus setting changed.
+
+### Validation and limits
+
+- The core/bridge are the tested 0.11.18 pair: 722 native tests passed, zero
+  failed, one optional GPU benchmark skipped; 224147 checks. Camera/input
+  integration: 10 tests / 2478 checks; camera client: 4 tests / 68 checks.
+- Read-only checker import/profile audit and 30 preflight cases passed;
+  recompiled launcher binding/UI fixtures passed 205 checks.
+- Proxy-loader smoke, installer/runtime/title/scope self-tests and the
+  46-file package audit passed. All six embedded native payloads were verified.
+- Local Microsoft Defender scans found no threats in the exact EXE, ZIP and
+  extracted package on 2026-09-22, engine 1.1.26080.3, signatures 1.459.330.0.
+  See [scan receipts](scans/0.11.19-ffb-test.json); public CI results are separate.
+- In-game/headset acceptance of this exact candidate remains UNVERIFIED.
+  This is a test release for GTA V Legacy **1.0.3889.0**, Story Mode only.
+
+Close GTA, run **Install / Update Everything**, then **Verify**, then
+**Play Story Mode**. See [wheel setup](WHEEL-PEDALS.md). The withdrawn 0.11.12
+release remains withdrawn.
+
 ## 0.11.12 - WITHDRAWN - 2026-09-21
 
 Withdrawn after a launch failure reported as error 17. Do not install this

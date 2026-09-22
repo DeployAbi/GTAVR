@@ -45,11 +45,12 @@ jobs:
           Write-Host "Engine: $($mp.FullName)"
           & $mp.FullName -SignatureUpdate
           Write-Host "Signature update exit code: $LASTEXITCODE (non-zero only means the update could not run; the scan below still uses the runner's signatures)"
-          & $mp.FullName -Scan -ScanType 3 -File "$PWD\GTAVR-Setup-and-Play.exe" -DisableRemediation
+          $output = (& $mp.FullName -Scan -ScanType 3 -File "$PWD\GTAVR-Setup-and-Play.exe" -DisableRemediation 2>&1 | Out-String)
           $scan = $LASTEXITCODE
+          Write-Host $output
           Write-Host "Scan exit code: $scan (0 = no threat, 2 = threat found)"
           Get-MpComputerStatus | Select-Object AntivirusSignatureVersion, AntivirusSignatureLastUpdated, AMEngineVersion | Format-List
-          if ($scan -ne 0) { throw "Microsoft Defender reported exit code $scan" }
+          if ($scan -ne 0 -or $output -notmatch 'found no threats' -or $output -match '\bskipped\b') { throw "Microsoft Defender did not confirm a completed no-threat scan (exit $scan)" }
       - name: Authenticode status (informational - the file is not code-signed)
         shell: pwsh
         run: (Get-AuthenticodeSignature .\GTAVR-Setup-and-Play.exe).Status

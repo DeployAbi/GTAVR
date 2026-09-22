@@ -5,6 +5,25 @@ things antivirus heuristics are written to notice. This page says exactly what
 it does, what it never does, and how to verify it yourself instead of taking
 anyone's word for it.
 
+## 0.11.19 setup-checker change
+
+On 2026-09-22 Microsoft Defender quarantined an older installed `GTAVOVR.exe`
+helper as `Trojan:Win32/Wacatac.C!ml`. This is a recorded detection, not a
+proven false positive. The GUI needed only its setup checks, but that older
+binary also contained the developer launch/injection path.
+
+The 0.11.19 distributed helper is compiled as a dedicated read-only checker:
+manual process injection, process launch, file staging and settings writes
+are excluded. It retains the installed filename for normal hash-owned updates.
+Verify checks package hashes before executing it. The separate developer
+injector is not shipped. The core still loads through `version.dll` in-game.
+
+Local diagnostic Defender scans of the exact release EXE, ZIP and extracted
+package reported no threats, with real-time protection active and no
+exclusion changes or quarantine restoration. The [dated receipts](scans/0.11.19-ffb-test.json)
+record hashes and engine/signature versions. Public CI scans are independent;
+consult their actual results. No result guarantees future classifications.
+
 ## What the exe does, technically
 
 `GTAVR-Setup-and-Play.exe` is a setup-and-play launcher. On **Install** it:
@@ -62,12 +81,12 @@ several classic points at once:
   ReShade, ENB and most single-player mod loaders use.
 - Its DLL **hooks Direct3D inside the game process** (API hooking), which is
   what every overlay from Steam to Discord to GeForce Experience does, and
-  what a lot of game cheats do too. Engines that flag it usually label it
-  "HackTool", "Injector" or "Game modification" rather than a trojan.
+  what a lot of game cheats do too. Engine labels differ; the older helper received a
+  Trojan detection, as documented above.
 - It **downloads and verifies a third-party archive** during install.
 
-None of that makes it safe; it explains the verdict. The section below is
-what makes it checkable.
+These characteristics do not establish the cause or correctness of any
+particular detection. The checks below provide evidence for each exact file.
 
 For the record, 0.9.7 on VirusTotal: 62 engines clean (Kaspersky, ESET,
 Bitdefender, Avast, Sophos, CrowdStrike, SentinelOne, Trend Micro,
@@ -92,10 +111,9 @@ logs are public and are produced by infrastructure the author does not
 control.
 
 **3. Your own engines.** Upload the exe to <https://www.virustotal.com/> and
-compare the SHA-256 shown there with `SHA256SUMS.txt`. Expect a few
-heuristic "HackTool"/"Injector" hits from the engines that flag every game
-mod loader; a *trojan*, *stealer* or *miner* verdict from a mainstream engine
-would be a real finding - please report it (below).
+compare the SHA-256 shown there with `SHA256SUMS.txt`. Report detections with the exact file hash and engine/signature version
+so they can be investigated. A generic label does not establish that a
+detection is false.
 
 **4. Watch it run.** Sysinternals Process Monitor on the install shows the
 file writes (game folder, `%LOCALAPPDATA%\GTAVR`, `%TEMP%`) and a single

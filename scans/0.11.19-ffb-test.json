@@ -1,0 +1,31 @@
+{
+  "release": "0.11.19-ffb-test",
+  "scope": "Local Microsoft Defender diagnostic custom scans; public CI results are separate",
+  "protection": "Real-time protection remained enabled; no antivirus settings changed",
+  "scans": [
+    {
+      "Sha256": "6C13F5B99024DDE2FCA448BEC3D9723C4784A11B7A4B48F57BC7A493222B0295",
+      "ScannedUtc": "2026-09-22T19:10:13.6504755Z",
+      "Engine": "1.1.26080.3",
+      "Signatures": "1.459.330.0",
+      "Result": "No threats detected",
+      "Artifact": "GTAVR-Setup-and-Play.exe"
+    },
+    {
+      "Sha256": "73B39B6195C347C3C9A56EA7D4D87620D07BFDA8D7AE2A972BDEA84351378998",
+      "ScannedUtc": "2026-09-22T19:10:14.6454228Z",
+      "Engine": "1.1.26080.3",
+      "Signatures": "1.459.330.0",
+      "Result": "No threats detected",
+      "Artifact": "GTAVR-Legacy-0.11.19-ffb-test-win64.zip"
+    },
+    {
+      "Sha256": "",
+      "ScannedUtc": "2026-09-22T19:10:15.4453887Z",
+      "Engine": "1.1.26080.3",
+      "Signatures": "1.459.330.0",
+      "Result": "No threats detected",
+      "Artifact": "Extracted ZIP package"
+    }
+  ]
+}
